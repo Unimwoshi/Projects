@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings</title>
+    <link rel="stylesheet" href="bookings.css">
+</head>
+<body>
+    
+    <div class="bookings">
+
+        <div class="credentialsDiv">
+            <form class="credentials"  id="bookingForm">
+                <div class="names">
+                    <div class="surname">
+                        <label for="surName">Surname:</label>
+                        <input type="text" name="surName" id="surName" placeholder="Ogbeche" class="input">
+                        
+                    </div>
+                    <div class="firstname">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" name="firstName" id="firstName" placeholder="Unimwoshi" class="input">
+                        
+                    </div>
+                </div>
+                <div class="emailWithName">
+                    <div class="middlename">
+                        <label for="middleName">Middle Name(Optional):</label>
+                        <input type="text" name="middleName" id="middleName" placeholder="Grace" class="input">
+                        
+                    </div>
+                    <div class="email">
+                        <label for="emailAddress">Email Address:</label>
+                        <input type="email" name="emailAddress" id="emailAddress" placeholder="emailaddress@example.com" class="input">
+                         <span class="error-message" id="emailError">Please enter a valid email address.</span>
+                    </div>
+                </div>
+               <div class="menuPhone">
+                    <div class="phone">
+                        <label for="phoneNum">Phone Number:</label>
+                        <input type="tel" name="phoneNum" id="phoneNum" placeholder="+234(0) 123 456 7890" class="input">
+                        
+                    </div>
+                    <div class="menu">
+                        <p>Select an Accommodation:</p>
+                        <div class="dropdown">
+                            <div class="select">
+                                <div class="container" class="clicked" ondblclick=closeMenu()  onclick=openMenu()>
+                                    <div class="trigger" onclick=openMenu() >Select </div>
+                                
+                                    <div class="caret" onclick=openMenu()></div>
+                                </div>
+                                <div class="options">
+                                    <span class="option" data-value="singleRoom"  onclick=closeMenu() name>Single Room</span>
+                                    <span class="option" data-value="queenRoom" onclick=closeMenu()>Queen Room</span>
+                                    <span class="option" data-value="kingRoom" onclick=closeMenu()>King Room</span>
+                                    <span class="option" data-value="suite" onclick=closeMenu()>Suite</span>
+                                    <span class="option" data-value="presidentialSuite" onclick=closeMenu()>Presidential Suite</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+                <div class="roomNumAndId">
+                    <div class="roomNum">
+                        <label for="roomNumber">Number of Rooms:</label>
+                        <div class="numberInput">
+                            
+                            <input type="number" id="roomNumber" value="1" min="1">
+                            
+                        </div>
+                    </div>
+
+                    <div class="identification">
+                        <label for="ID" class="idLabel">Valid means of Identification:</label>
+                        <input type="file" name="ID" id="ID" class="fileUpload">
+                        <span class="fileName" id="fileName">No File Chosen</span>
+                    </div>
+                </div>
+                
+               <div class="confirmation">
+                    <p>
+                        By clicking the button below, you confirm that you are 
+                        sixteen years of age or older and agree to our
+                        <a href="#">Privacy Policy</a> or <a href="#">Terms of Service</a>.
+                    </p>
+                    <button type="submit" class="confirm" id="submit">Confirm Reservation</button>
+               </div>
+            </form>
+        </div>
+    </div>
+
+<script src="bookings.js"></script>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAexmPlLPt0wiOp27XfqeDEOVnCq3MiLEw",
+  authDomain: "elitehaven002.firebaseapp.com",
+  projectId: "elitehaven002",
+  storageBucket: "elitehaven002.appspot.com",
+  messagingSenderId: "698770824342",
+  appId: "1:698770824342:web:033839581d3d526cd5b6b7"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Get a reference to the database service
+const db = getDatabase(app);
+
+// Create a reference to the "users" node
+document.getElementById('submit').addEventListener('click', function(e) {
+  e.preventDefault();
+  set(ref(db, 'user/' +  document.getElementById('firstName').value), {
+    surname: document.getElementById('surName').value,
+    firstName:document.getElementById('firstName').value,
+    middleName:document.getElementById('middleName').value,
+    emailAddress :document.getElementById('emailAddress').value,
+    phoneNum: document.getElementById('phoneNum').value,
+    roomNumber :document.getElementById('roomNumber').value,
+    accommodation: localStorage.getItem('selectedOption')
+    
+  });
+    alert("Login Successful!");
+})
+</script>
+
+</body>
+</html>
